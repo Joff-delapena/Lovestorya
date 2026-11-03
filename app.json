@@ -6,11 +6,16 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/app-icon.png",
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "package": "com.jofferson11.lovestorya"
+      "package": "com.jofferson11.lovestorya",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app-icon.png",
+        "backgroundColor": "#FDF6F0"
+      }
     },
     "web": {
       "bundler": "metro"
