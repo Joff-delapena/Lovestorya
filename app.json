@@ -31,6 +31,12 @@
           "backgroundColor": "#FDF6F0"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "dd5898d5-e55a-4c88-b1f0-b3398464444d"
+      }
+    },
+    "owner": "jofferson11"
   }
 }
