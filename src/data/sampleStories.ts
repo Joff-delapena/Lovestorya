@@ -27,7 +27,7 @@ export const SAMPLE_STORIES: Story[] = [
     title: 'When We Finally Meet',
     authorName: 'LoveStorya Originals',
     description:
-      'Alex from Mindanao meets Mia from Visayas on a dating app. What begins with unanswered messages and a Mobile Legends invitation grows into two years of long-distance love, little misunderstandings, hard-earned patience, and a first meeting they are still saving for.',
+      'joff from Mindanao meets hanie from Visayas on a dating app. What begins with unanswered messages and a Mobile Legends invitation grows into two years of long-distance love, little misunderstandings, hard-earned patience, and a first meeting they are still saving for.',
     genre: 'Romance',
     credits:
       'An original, romanticized English story based on details shared by the storyteller. Some scenes are fictionalized.',
@@ -36,11 +36,11 @@ export const SAMPLE_STORIES: Story[] = [
   {
     id: 'sample-read-me-when-you-need-me',
     title: 'Read This When You Need Me',
-    authorName: 'Alex',
+    authorName: 'Joff',
     description:
       'A little book of letters for Mia: for the days you miss me, feel overwhelmed, overthink, or simply need a reminder that you are loved—even from far away.',
     genre: 'Letters',
-    credits: 'Personal letters from Alex to Mia.',
+    credits: 'Personal letters from joff to hanie.',
     updatedAt: 5,
   },
 ];
@@ -2553,7 +2553,7 @@ We hadn't met yet. We were still making our way there, together. And that was a 
       id: 'read-me-when-you-need-me-1',
       title: 'Read This When You Miss Me',
       order: 1,
-      content: `Hi, Mia.
+      content: `Hi, Hanie.
 
 If you opened this because you miss me, then I want you to know that I miss you too. I wish I could close the distance between Mindanao and Visayas with one step. I wish I could be beside you instead of sending this through a screen.
 

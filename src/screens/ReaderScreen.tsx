@@ -168,19 +168,11 @@ export function ReaderScreen({
         <Text
           style={[
             styles.storyTitle,
-            { color: colors.muted, fontFamily: titleFontFamily },
+            { color: colors.text, fontFamily: titleFontFamily },
           ]}
         >
           {story.title}
         </Text>
-        <Text style={[styles.author, { color: colors.muted }]}>
-          by {story.authorName}
-        </Text>
-        {story.credits ? (
-          <Text style={[styles.credits, { color: colors.muted }]}>
-            Credits: {story.credits}
-          </Text>
-        ) : null}
 
         {loading ? (
           <View style={styles.message}>
@@ -308,14 +300,17 @@ const styles = StyleSheet.create({
   fontSizeLabel: { minWidth: 18, textAlign: 'center', fontSize: 12 },
   scrollView: { flex: 1 },
   content: { paddingHorizontal: 25, paddingTop: 28, paddingBottom: 36 },
-  storyTitle: { fontSize: 13, fontWeight: '700' },
-  author: { fontSize: 12, marginTop: 5 },
-  credits: { fontSize: 11, lineHeight: 16, marginTop: 5 },
+  storyTitle: {
+    fontSize: 24,
+    lineHeight: 31,
+    fontWeight: '700',
+    marginBottom: 22,
+  },
   chapterCount: {
     fontSize: 11,
     fontWeight: '800',
     letterSpacing: 1.4,
-    marginTop: 38,
+    marginTop: 0,
   },
   chapterTitle: {
     fontSize: 27,
