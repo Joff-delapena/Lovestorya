@@ -1,6 +1,13 @@
-import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { FirebaseError, getApp, getApps, initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  initializeFirestore,
+} from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+
+declare const process: {
+  env: Record<string, string | undefined>;
+};
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -18,11 +25,29 @@ const missingConfig = Object.entries(firebaseConfig)
 if (missingConfig.length > 0) {
   throw new Error(
     `Missing Firebase environment variables: ${missingConfig.join(', ')}. ` +
-      'Copy .env.example to .env, add your Firebase config, and restart Expo.',
+      'Check your local .env file and restart Expo.',
   );
 }
 
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+function getReactNativeFirestore() {
+  try {
+    return initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+    });
+  } catch (cause) {
+    if (
+      cause instanceof FirebaseError &&
+      cause.code === 'failed-precondition'
+    ) {
+      return getFirestore(app);
+    }
+    throw cause;
+  }
+}
+
+export const db = getReactNativeFirestore();
 export const storage = getStorage(app);
+
+export default app;

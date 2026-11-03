@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "LoveStorya",
+    "slug": "lovestorya",
+    "scheme": "lovestorya",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.jofferson11.lovestorya"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/lovestorya-logo.png",
+          "imageWidth": 300,
+          "resizeMode": "contain",
+          "backgroundColor": "#FDF6F0"
+        }
+      ]
+    ]
+  }
+}
