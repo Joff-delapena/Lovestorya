@@ -41,10 +41,10 @@ npx expo start
 
 `src/config/firebase.ts` initializes the modular Firebase SDK once and exports:
 
-- `db` — Cloud Firestore instance.
-- `storage` — Firebase Storage instance.
+- `db` — Cloud Firestore instance when Firebase is configured.
+- `storage` — Firebase Storage instance when Firebase is configured.
 
-Import these instances into service modules (for example, `import { db } from '../config/firebase'`). The module reports an explicit error at startup if any required environment variable is missing. Firestore is configured to use long polling for React Native network compatibility. If the SDK still reports that it cannot reach Firestore, check the device/emulator internet connection and confirm the local `.env` values match the Firebase project's web app configuration.
+Import these instances into service modules (for example, `import { db } from '../config/firebase'`). If Firebase variables are missing, the app still opens with its bundled sample stories, while Firebase-backed stories are unavailable and an error is shown in the library. For EAS builds, add the same `EXPO_PUBLIC_FIREBASE_*` variables to the EAS environment used by the build profile. Firestore is configured to use long polling for React Native network compatibility. If the SDK still reports that it cannot reach Firestore, check the device/emulator internet connection and confirm the configured values match the Firebase project's web app configuration.
 
 ## 4. Reading preferences
 

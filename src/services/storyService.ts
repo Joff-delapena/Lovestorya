@@ -9,7 +9,7 @@ import {
   type QuerySnapshot,
   type Unsubscribe,
 } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { db, firebaseConfigError } from '../config/firebase';
 import type { Story, StoryChapter } from '../types/story';
 
 const STORIES_COLLECTION = 'stories';
@@ -96,6 +96,14 @@ export function watchStoryChapters(
   onChapters: (chapters: StoryChapter[]) => void,
   onError: (error: Error) => void,
 ): Unsubscribe {
+  if (!db) {
+    onError(
+      firebaseConfigError ??
+        new Error('Firebase is not configured for this app build.'),
+    );
+    return () => {};
+  }
+
   const chaptersQuery = query(
     collection(db, STORIES_COLLECTION, storyId, 'chapters'),
     orderBy('order', 'asc'),
@@ -122,6 +130,14 @@ export function watchPublishedStories(
   onStories: (stories: Story[]) => void,
   onError: (error: Error) => void,
 ): Unsubscribe {
+  if (!db) {
+    onError(
+      firebaseConfigError ??
+        new Error('Firebase is not configured for this app build.'),
+    );
+    return () => {};
+  }
+
   const storiesCollection = collection(db, STORIES_COLLECTION);
   const indexedStoriesQuery = query(
     storiesCollection,

@@ -1,9 +1,16 @@
-import { FirebaseError, getApp, getApps, initializeApp } from 'firebase/app';
+import {
+  FirebaseError,
+  getApp,
+  getApps,
+  initializeApp,
+  type FirebaseApp,
+} from 'firebase/app';
 import {
   getFirestore,
   initializeFirestore,
+  type Firestore,
 } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 declare const process: {
   env: Record<string, string | undefined>;
@@ -18,36 +25,61 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
+function isFirebaseConfigComplete(
+  config: typeof firebaseConfig,
+): config is Record<keyof typeof firebaseConfig, string> {
+  return Object.values(config).every(
+    (value) => typeof value === 'string' && value.length > 0,
+  );
+}
+
 const missingConfig = Object.entries(firebaseConfig)
   .filter(([, value]) => !value)
   .map(([key]) => key);
 
-if (missingConfig.length > 0) {
-  throw new Error(
-    `Missing Firebase environment variables: ${missingConfig.join(', ')}. ` +
-      'Check your local .env file and restart Expo.',
-  );
-}
+export const firebaseConfigError =
+  missingConfig.length > 0
+    ? new Error(
+        `Missing Firebase environment variables: ${missingConfig.join(', ')}. ` +
+          'Add them to the build environment and rebuild the app.',
+      )
+    : null;
 
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+const firebaseServices: {
+  app: FirebaseApp | null;
+  db: Firestore | null;
+  storage: FirebaseStorage | null;
+} = isFirebaseConfigComplete(firebaseConfig)
+  ? (() => {
+      const app =
+        getApps().length > 0
+          ? getApp()
+          : initializeApp(firebaseConfig);
 
-function getReactNativeFirestore() {
-  try {
-    return initializeFirestore(app, {
-      experimentalForceLongPolling: true,
-    });
-  } catch (cause) {
-    if (
-      cause instanceof FirebaseError &&
-      cause.code === 'failed-precondition'
-    ) {
-      return getFirestore(app);
-    }
-    throw cause;
-  }
-}
+      function getReactNativeFirestore() {
+        try {
+          return initializeFirestore(app, {
+            experimentalForceLongPolling: true,
+          });
+        } catch (cause) {
+          if (
+            cause instanceof FirebaseError &&
+            cause.code === 'failed-precondition'
+          ) {
+            return getFirestore(app);
+          }
+          throw cause;
+        }
+      }
 
-export const db = getReactNativeFirestore();
-export const storage = getStorage(app);
+      return {
+        app,
+        db: getReactNativeFirestore(),
+        storage: getStorage(app),
+      };
+    })()
+  : { app: null, db: null, storage: null };
+
+export const { app, db, storage } = firebaseServices;
 
 export default app;
